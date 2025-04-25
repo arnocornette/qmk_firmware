@@ -1,7 +1,7 @@
 {
     "manufacturer": "foostan",
     "url": "https://github.com/foostan/crkbd",
-    "maintainer": "qmk",
+    "maintainer": "arnocornette",
     "usb": {
         "vid": "0x4653"
     },
