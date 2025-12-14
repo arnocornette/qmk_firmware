@@ -6,8 +6,8 @@
         "bootmagic": true,
         "mousekey": true,
         "extrakey": true,
-        "rgblight": true,
-        "rgb_matrix": true,
+        "rgblight": false,
+        "rgb_matrix": false,
         "tri_layer": true,
         "nkro": false
     },
