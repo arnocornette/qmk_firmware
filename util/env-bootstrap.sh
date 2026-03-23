@@ -230,7 +230,7 @@ __EOT__
             *debian* | *ubuntu*) echo "zstd build-essential clang-format diffutils wget unzip zip libhidapi-hidraw0 dos2unix git" ;;
             *fedora*) echo "zstd clang diffutils which gcc git wget unzip zip hidapi dos2unix libusb-devel libusb1-devel libusb-compat-0.1-devel libusb0-devel git epel-release" ;;
             *suse*) echo "zstd clang diffutils wget unzip zip libhidapi-hidraw0 dos2unix git libusb-1_0-devel gzip which" ;;
-            *gentoo*) echo "zstd diffutils wget unzip zip dev-libs/hidapi dos2unix dev-vcs/git dev-libs/libusb app-arch/gzip which" ;;
+            *gentoo*) echo "zstd sys-apps/diffutils wget unzip zip dev-libs/hidapi dos2unix dev-vcs/git dev-libs/libusb app-arch/gzip which" ;;
             *)
                 echo >&2
                 echo "Sorry, we don't recognize your distribution." >&2
@@ -418,7 +418,7 @@ __EOT__
         # Get the latest toolchain release from https://github.com/qmk/qmk_toolchains
         local latest_toolchains_release=$(github_api_call repos/qmk/qmk_toolchains/releases/latest - | grep -oE '"tag_name": "[^"]+' | grep -oE '[^"]+$')
         # Download the specific release asset with a matching keyword
-        local toolchain_url=$(github_api_call repos/qmk/qmk_toolchains/releases/tags/$latest_toolchains_release - | grep -oE '"browser_download_url": "[^"]+"' | grep -oE 'https://[^"]+' | grep $(fn_os)$(fn_arch))
+        local toolchain_url=$(github_api_call repos/qmk/qmk_toolchains/releases/tags/$latest_toolchains_release - | grep -oE '"browser_download_url": "[^"]+"' | grep -oE 'https://[^"]+' | grep -E "qmk_toolchains-.*$(fn_os)$(fn_arch)")
         if [ -z "$toolchain_url" ]; then
             echo "No toolchain found for this OS/Arch combination." >&2
             exit 1
@@ -445,7 +445,7 @@ __EOT__
         # Get the latest flashing tools release from https://github.com/qmk/qmk_flashutils
         local latest_flashutils_release=$(github_api_call repos/qmk/qmk_flashutils/releases/latest - | grep -oE '"tag_name": "[^"]+' | grep -oE '[^"]+$')
         # Download the specific release asset with a matching keyword
-        local flashutils_url=$(github_api_call repos/qmk/qmk_flashutils/releases/tags/$latest_flashutils_release - | grep -oE '"browser_download_url": "[^"]+"' | grep -oE 'https://[^"]+' | grep "$osarchvariant")
+        local flashutils_url=$(github_api_call repos/qmk/qmk_flashutils/releases/tags/$latest_flashutils_release - | grep -oE '"browser_download_url": "[^"]+"' | grep -oE 'https://[^"]+' | grep -E "qmk_flashutils-.*$osarchvariant")
         if [ -z "$flashutils_url" ]; then
             echo "No flashing tools found for this OS/Arch combination." >&2
             exit 1
