@@ -145,6 +145,13 @@ tap_dance_action_t tap_dance_actions[] = {
 // (top-left while the Space thumb is held).
 #define HYPR_TAB LGUI(LCTL(LALT(LSFT(KC_TAB))))
 
+// rofi-rbw shortcuts (dotfiles pass/rofi-rbw.rc). Plain mod+key, no tap-hold
+// involved, so they fire reliably while the Space thumb holds _NAV.
+#define PW_TYPE LALT(KC_I)               // autotype user <Tab> pass
+#define PW_USER LALT(KC_U)               // copy username
+#define PW_PASS LALT(KC_P)               // copy password
+#define PW_OTP  LALT(KC_O)               // copy TOTP
+
 // ── niri hotkey aliases ───────────────────────────────────────
 //  Plain key-combo macros. Holding Shift/Ctrl at BASE-level adds
 //  to whatever these emit (see "modifier composition" above).
@@ -216,10 +223,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 //  Right hand = arrows (hjkl). Left hand = page/line nav.
 //  Row 2 left = clipboard (Undo/Cut/Copy/Paste) — works in most
 //  X11/GTK/Wayland apps via XK_Undo / XF86Cut / etc.
+//  Row 2 right = rofi-rbw: autotype / user / pass / TOTP (N M , .)
 [_NAV] = LAYOUT_ortho_4x12_1x2uC(
     HYPR_TAB,KC_PGUP, KC_BSPC, KC_UP,   KC_DEL,  KC_PGDN, XXXXXXX, KC_WBAK, XXXXXXX, KC_WFWD, XXXXXXX, KC_DEL,
     KC_HOME, KC_LEFT, KC_DOWN, KC_RGHT, KC_END,  XXXXXXX, KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, XXXXXXX, XXXXXXX,
-    _______, KC_UNDO, KC_CUT,  KC_COPY, KC_PSTE, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, _______,
+    _______, KC_UNDO, KC_CUT,  KC_COPY, KC_PSTE, XXXXXXX, PW_TYPE, PW_USER, PW_PASS, PW_OTP,  XXXXXXX, _______,
     _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, _______,          XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX
 ),
 
@@ -291,7 +299,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_BRID, XXXXXXX, KC_BRIU, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, _______,
     XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
     _______, XXXXXXX, XXXXXXX, XXXXXXX, KC_VOLD, XXXXXXX, KC_VOLU, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, _______,
-    XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_MPRV, KC_MPLY, KC_MNXT, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_MUTE
+    XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_MPRV, KC_MPLY,          KC_MNXT, XXXXXXX, XXXXXXX, XXXXXXX, KC_MUTE
 ),
 
 // ── LSP ───────────────────────────────────────────────────────

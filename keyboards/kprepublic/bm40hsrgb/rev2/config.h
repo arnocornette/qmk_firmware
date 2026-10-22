@@ -27,28 +27,28 @@
 #define TAPPING_TERM_TAP_DANCE 180
 
 // ── Mouse keys ───────────────────────────────────────────────
-// Use kinetic mouse mode for smooth acceleration
-#define MK_KINETIC_SPEED
+// Default accelerated mode (no MK_KINETIC_SPEED / MOUSEKEY_INERTIA):
+// those modes ignore MS_ACL0/MS_ACL2 or use a different set of knobs.
+//   tap        → 4 px nudge
+//   hold       → ramps 4 → 32 px/frame over ~0.8 s  (≈2000 px/s top)
+//   + MS_ACL0  → fixed  8 px/frame (≈500 px/s)  precise UI targeting
+//   + MS_ACL2  → fixed 32 px/frame (≈2000 px/s) skip the ramp
+// Speed in px/s = MOVE_DELTA * MAX_SPEED * 1000 / INTERVAL.
 
-// Base cursor speed (modified by MS_SLOW / MS_FAST in process_record)
-#define MOUSEKEY_BASE_SPEED       900
-#define MOUSEKEY_DECELERATED_SPEED 200
-#define MOUSEKEY_ACCELERATED_SPEED 3000
+// Cursor
+#define MOUSEKEY_DELAY            10  // x10 ms → 100 ms before repeat (taps stay single nudges)
+#define MOUSEKEY_INTERVAL         16  // ~60 Hz reports
+#define MOUSEKEY_MOVE_DELTA        4  // px per step at start of ramp
+#define MOUSEKEY_MAX_SPEED         8  // top = MOVE_DELTA * 8 = 32 px/step
+#define MOUSEKEY_TIME_TO_MAX      50  // steps to reach top (~0.8 s)
 
-// How quickly the cursor accelerates from base to max
-#define MOUSEKEY_MOVE_DELTA       8
-// Time between cursor moves (lower = faster polling)
-#define MOUSEKEY_INTERVAL         16  // ~60Hz
-// Delay before acceleration starts (ms)
-#define MOUSEKEY_TIME_TO_MAX      40
-
-// Scroll speed
-#define MOUSEKEY_WHEEL_BASE_SPEED     12
-#define MOUSEKEY_WHEEL_INTERVAL       100
-#define MOUSEKEY_WHEEL_TIME_TO_MAX    40
-#define MOUSEKEY_WHEEL_DECELERATED_SPEED 3
-#define MOUSEKEY_WHEEL_ACCELERATED_SPEED 50
-#define MOUSEKEY_WHEEL_DELTA          1
+// Scroll wheel (one unit = one wheel notch)
+//   hold → ~16 notches/s ramping to ~50/s over ~3 s; ACL2 = top instantly
+#define MOUSEKEY_WHEEL_DELAY      10  // x10 ms → 100 ms before repeat
+#define MOUSEKEY_WHEEL_INTERVAL   60  // ms between notches
+#define MOUSEKEY_WHEEL_DELTA       1
+#define MOUSEKEY_WHEEL_MAX_SPEED   3  // top = 3 notches per interval
+#define MOUSEKEY_WHEEL_TIME_TO_MAX 50
 
 // ── Combos (optional convenience pairs) ─────────────────────
 // Uncomment to enable. Uses very tight timing to avoid false triggers.
