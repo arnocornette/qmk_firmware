@@ -2,8 +2,8 @@
 //  BM40RGB v2 — QMK keymap for niri + LazyVim
 //  Layout: LAYOUT_ortho_4x12_1x2uC (47 keys)
 //
-//  DESIGN RULE: All layers are momentary (MO / LT only).
-//  There are NO toggle layers and NO tri-layers. Every layer is
+//  DESIGN RULE: All layers are momentary (MO / LT only), with one
+//  exception: GAME is toggled (MEDIA + G). There are NO tri-layers. Every layer is
 //  active only while its activating key is held. Every layer is
 //  reachable directly from BASE — no layer-from-layer hops.
 // ============================================================
@@ -18,6 +18,7 @@
 //  │  5  │ NIRI   — niri WM: workspaces, windows, apps, mons  │
 //  │  6  │ MEDIA  — Volume, brightness, transport             │
 //  │  7  │ LSP    — LazyVim LSP / DAP / Telescope / Trouble   │
+//  │  -  │ GAME   — Warframe: plain QWERTY, no mod-taps       │
 //  └─────┴────────────────────────────────────────────────────┘
 //
 //  HOME-ROW MODS (BASE layer, tap/hold):
@@ -33,6 +34,7 @@
 //    MOUSE:  hold bottom-left pinky  (MO_MSE)
 //    LSP:    hold top-left pinky     (MO_LSP, row 0 col 0)
 //    MEDIA:  hold top-right pinky    (MO_MED, row 0 col 11)
+//    GAME:   toggle with MEDIA + G   (TG_GAME) — same combo exits
 //
 //  Tab and Backspace remain available via their thumb LT keys
 //  (TH_TAB / TH_BSP) — the top-row pinky slots are repurposed.
@@ -75,6 +77,7 @@ enum layers {
     _MOUSE,
     _MOUSE_FAST,
     _NIRI,
+    _GAME,      // below MEDIA so MO_MED (and TG_GAME) still work while toggled on
     _MEDIA,
     _LSP,
 };
@@ -140,6 +143,7 @@ tap_dance_action_t tap_dance_actions[] = {
 #define MO_MED  MO(_MEDIA)               // hold = MEDIA  (top-right pinky)
 
 #define CT_ESC  LCTL_T(KC_ESC)
+#define TG_GAME TG(_GAME)                // toggle Warframe layer (on _MEDIA)
 
 // Hyper+Tab — niri-bound to spawn pkm-capture. Lives on _NAV [0][0]
 // (top-left while the Space thumb is held).
@@ -292,12 +296,27 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     N_KILL,  N_FLT,   N_SESS,  N_TERM,  N_LAUNCH,N_BROWSE,         _______,  _______,  N_CTR,    N_TAB,   N_FULL
 ),
 
+// ── GAME ──────────────────────────────────────────────────────
+//  Warframe. Toggled on/off with MEDIA + G. Plain keys only — no
+//  home-row mods (holding A/S/D would otherwise fire GUI/Alt/Ctrl)
+//  and no GUI key, so niri shortcuts can't fire mid-fight.
+//  Movement: WASD, Shift sprint, Ctrl crouch (pinky or thumb), C,
+//  Space jump. Abilities 1-4 bottom-right. Letters + Bspc/Enter
+//  stay usable for chat. Top-right stays MO_MED to exit.
+[_GAME] = LAYOUT_ortho_4x12_1x2uC(
+    KC_TAB,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    MO_MED,
+    KC_ESC,  KC_A,    KC_S,    KC_D,    KC_F,    KC_G,    KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, KC_BSPC,
+    KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_ENT,
+    KC_LCTL, KC_LALT, XXXXXXX, XXXXXXX, KC_LCTL, KC_SPC,           KC_1,    KC_2,    KC_3,    KC_4,    KC_QUOT
+),
+
 // ── MEDIA ─────────────────────────────────────────────────────
 //  Active while MO_MED (top-right pinky, BASE row 0 col 11) is held.
 //  niri forwards XF86Audio* / XF86MonBrightness* to noctalia IPC.
+//  G (row 1 col 5) = TG_GAME: toggle the Warframe layer.
 [_MEDIA] = LAYOUT_ortho_4x12_1x2uC(
     XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_BRID, XXXXXXX, KC_BRIU, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, _______,
-    XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+    XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, TG_GAME, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
     _______, XXXXXXX, XXXXXXX, XXXXXXX, KC_VOLD, XXXXXXX, KC_VOLU, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, _______,
     XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_MPRV, KC_MPLY,          KC_MNXT, XXXXXXX, XXXXXXX, XXXXXXX, KC_MUTE
 ),

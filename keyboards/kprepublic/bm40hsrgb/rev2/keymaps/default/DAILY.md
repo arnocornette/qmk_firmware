@@ -267,6 +267,25 @@ Shift/Ctrl can come from the pinky column (`LShift` row 2 col 0,
 - niri forwards `XF86Audio*`/`XF86MonBrightness*` to noctalia's IPC
   calls — QMK's standard keycodes work unmodified.
 
+### 4.6b `_GAME` — Warframe (toggle: MEDIA + G)
+
+The one toggled layer. Hold the top-right pinky and tap `G` to turn
+it on; do the same again to turn it off. Plain keys only — no
+home-row mods, no Super — so WASD can be held freely and niri
+shortcuts can't fire mid-mission.
+
+```
+  │Tab │ Q  │ W  │ E  │ R  │ T  │ Y  │ U  │ I  │ O  │ P  │MED │
+  │Esc │ A  │ S  │ D  │ F  │ G  │ H  │ J  │ K  │ L  │ ;  │Bspc│
+  │Sft │ Z  │ X  │ C  │ V  │ B  │ N  │ M  │ ,  │ .  │ /  │Ent │
+  │Ctl │Alt │    │    │Ctl │  Space  │ 1  │ 2  │ 3  │ 4  │ '  │
+```
+
+- Movement: WASD, Shift (sprint/roll), Ctrl (pinky or left thumb),
+  C, Space (jump).
+- Abilities 1-4 on the bottom-right.
+- Chat: all letters, Shift, Bspc and Enter work as normal.
+
 ### 4.7 `_LSP` — hold top-left pinky (Tab position)
 
 LazyVim's command surface on one layer. Every key emits a LazyVim

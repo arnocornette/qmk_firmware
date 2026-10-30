@@ -168,7 +168,7 @@ layers:
       - ''
       - ''
       - {t: ▽, type: trans}
-    - ['', '', '', '', '', '', '', '', '', '', '', '']
+    - ['', '', '', '', '', 'TG(GAME)', '', '', '', '', '', '']
     - - {t: ▽, type: trans}
       - ''
       - ''
@@ -192,6 +192,12 @@ layers:
       - ''
       - ''
       - Mute
+
+  GAME:
+    - [Tab, Q, W, E, R, T, Y, U, I, O, P, MO(MED)]
+    - [Esc, A, S, D, F, G, H, J, K, L, ;, BSpc]
+    - [LSft, Z, X, C, V, B, N, M, ',', ., /, Enter]
+    - [LCtl, LAlt, '', '', LCtl, {t: Space, type: '2u'}, '1', '2', '3', '4', "'"]
 
   LSP:
     - - {t: ▽, type: trans}
